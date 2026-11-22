@@ -25,6 +25,6 @@ To prevent wasting tokens re-reading old session logs or asking redundant onboar
 ---
 
 ## 3. Skill & Tool Execution Standards
-* **ICP Before Search**: Always validate or formulate the detailed ICP (Firmographics, Buyer Personas, Triggers, Apollo Filters) and get user confirmation before executing searches.
-* **Swarm Research**: Fan out parallel research agents to extract 3–5 verifiable bullet points covering company growth, tech stack, and personal role priorities.
-* **Google Sheets Logging**: Always use `scripts/sheets_logger.py` (`gsheets mutate import-csv`) to generate a professionally formatted spreadsheet with frozen, colored header rows in Google Drive, or fallback to local CSV when offline.
+* **Company Suitability First**: Always qualify and analyze the company's macro situation, growth velocity, tech stack, and pain points before querying individual people. Generate a dedicated company intelligence dossier (`dossiers/dossier_<company_slug>.md`) for each qualified account.
+* **Multi-Thread Stakeholder Ladder**: Map out contacts across 3 tiers (Managers for ground-truth warm-up -> Directors for functional championship -> VPs/CXOs for executive sign-off) to take multiple strategic shots per account.
+* **Live-Call Google Sheets**: Always use `scripts/sheets_logger.py` (`gsheets mutate import-csv`) to populate the 17-column multi-thread matrix with company scenario and individual soundbites, frozen row 1, and colored headers, or fallback to local CSV when offline.

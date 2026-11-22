@@ -1,82 +1,76 @@
 ---
 name: icp-prospecting-swarm
 description: >-
-  End-to-end B2B prospecting workflow: builds a detailed Ideal Customer Profile (ICP)
-  for a target company's products, seeks user confirmation, queries leads via Apollo MCP,
-  deploys an agent swarm to research and enrich each prospect, generates personalized
-  hooks and conversation bits, and logs everything to Google Sheets.
+  Account-First B2B Prospecting & Multi-Thread Swarm Workflow: qualifies target
+  companies before finding people, builds comprehensive company intelligence dossiers,
+  maps a 3-tier stakeholder ladder (Managers -> Directors -> VPs/CXOs), crafts
+  role-specific conversation soundbites anchored in company context, and logs everything
+  to an intuitive live-call-ready Google Sheet.
 ---
 
-# ICP-to-Lead Prospecting Swarm Workflow
+# Account-First B2B Prospecting & Multi-Thread Swarm Workflow
 
-This workflow automates the B2B prospecting lifecycle from ICP strategy to outreach-ready intelligence logged in Google Sheets.
+This workflow tackles B2B prospecting as a **Company-Suitability Challenge First**: qualifying whether target companies genuinely need our solution, generating deep account dossiers, and mapping a multi-tier stakeholder ladder to take multiple strategic shots per account.
 
 ```mermaid
 flowchart TD
-    A["1. Input Company & Product Details"] --> B["2. Research & Generate Detailed ICP"]
-    B --> C{"3. Human-in-the-Loop Confirmation"}
-    C -->|Approved| D["4. Query Leads via Apollo MCP"]
-    C -->|Feedback/Edit| B
-    D --> E["5. Swarm Research & Signal Enrichment"]
-    E --> F["6. Craft Hooks, Soundbites & Outreach Bits"]
-    F --> G["7. Log Structured Leads to Google Sheets"]
-    G --> H["8. Surface Spreadsheet Link & Next Steps"]
+    A["1. Product & Value Architecture"] --> B["2. Company Discovery & Suitability Scoring"]
+    B --> C{"3. Account Qualification Gate"}
+    C -->|Approved Account| D["4. Deep Company Dossier Generation"]
+    C -->|Unfit / Reject| B
+    D --> E["5. Multi-Thread Stakeholder Discovery (Mgrs -> Dirs -> VPs)"]
+    E --> F["6. Role-Specific Hooks, Soundbites & Cheat Sheets"]
+    F --> G["7. Intuitive Live-Call Google Sheet & CSV Sync"]
+    G --> H["8. Surface Spreadsheet & Dossier Links"]
 ```
 
 ---
 
 ## Stage-by-Stage Execution Runbook
 
-### Stage 1: Build Detailed ICP
-When given a company or product to prospect for:
-1. Research the company's offerings, value proposition, pricing model, and customer base.
-2. Structure a comprehensive Ideal Customer Profile (ICP) containing:
-   - **Firmographics**: Target industries/verticals, company size (headcount & revenue/ARR), business model (B2B SaaS, enterprise, marketplace, etc.), geographic focus.
-   - **Buyer Personas**: Primary decision makers (Economic Buyers), Champions, Evaluators (titles, seniority, department).
-   - **Technographics**: Complementary tech stack, competitor software, signals of technical maturity.
-   - **Trigger Events & Pain Points**: Funding events, executive hiring, tool migration, scaling bottlenecks.
-   - **Apollo Search Filter Specs**: Exact titles (e.g., `VP of Sales`, `Head of RevOps`), seniority levels (`director`, `vp`, `c_suite`), headcount ranges (`51-200`, `201-500`), and keyword tags.
-3. Present the ICP as a structured Markdown document to the user.
+### Stage 1: Define Value Architecture & Account Qualification Criteria
+1. Clarify our product's core value wedge, target departments, and technical prerequisites.
+2. Define qualification boundaries:
+   - **Firmographics**: Target industry verticals, headcount range (e.g. 50–500), growth velocity.
+   - **Technographics**: Required infrastructure or CRM systems.
+   - **Scaling Pain**: The exact friction point that breaks as the company scales.
 
-### Stage 2: User Confirmation & Calibration Gate
-Before making MCP queries or spending Apollo credits:
-1. Present the ICP parameters clearly.
-2. Ask the user for confirmation or adjustments (e.g. refining target seniority, geography, or company size).
-3. Once confirmed, proceed to lead generation.
+### Stage 2: Account Discovery & Suitability Analysis (Company First)
+Before searching for any individual contact:
+1. Identify candidate companies via firmographic criteria or target list.
+2. Enrich target companies via Apollo organization telemetry:
+   - Headcount growth (6-month and 12-month trajectory).
+   - Departmental headcount breakdowns (e.g. engineering vs sales size).
+   - Active installed tech stack and recent hiring signals.
+3. Compute **Account Fit Score (1–10)** and evaluate the "Why Us" hypothesis.
+4. Filter out low-fit accounts early to preserve credits and sales bandwidth.
 
-### Stage 3: Lead Discovery via Apollo MCP
-1. Execute search queries using the Apollo MCP server:
-   - Filter by specified job titles, seniorities, locations, and organization sizes.
-   - Retrieve target candidate records:
-     - Name (First & Last)
-     - Current Title
-     - Company Name & Domain
-     - Work Email / Contact status
-     - LinkedIn URL
-     - Apollo ID & Location
-2. Deduplicate and filter out non-target profiles.
+### Stage 3: Generate Company Intelligence Dossier
+For every approved account:
+1. Generate an exhaustive Markdown intelligence file (`dossiers/dossier_<company_slug>.md`) following `templates/company_dossier_template.md`.
+2. Synthesize:
+   - Macro business scenario and expansion triggers.
+   - Core operational bottleneck and economic wedge.
+   - Live call objection handling and talk track.
 
-### Stage 4: Agent Swarm Research & Signal Enrichment
-Deploy an Agent Swarm (or parallel worker agents) to investigate each lead:
-1. **Company Deep-Dive**:
-   - Recent news, press releases, product launches, or funding rounds.
-   - Tech stack indicators, hiring growth in key departments.
-2. **Individual Deep-Dive**:
-   - Tenure in role, past experience, public posts, published articles, podcast appearances.
-   - Specific operational priorities and challenges tied to their role.
-3. **Core Bullet Points**:
-   - Distill research into 3–5 high-impact, factual bullet points highlighting key business triggers and personal relevance.
+### Stage 4: Map Multi-Thread Stakeholder Ladder
+Map out 3 distinct tiers of stakeholders inside the approved account to enable multiple shots and bottom-up warm-up:
+- **Tier 1: Ground-Truth Gatherers (Managers & Lead ICs)**
+  - Validate day-to-day friction, technical reality, and warm up the account without sales friction.
+- **Tier 2: Functional Champions (Directors & Heads of Function)**
+  - Partner on operational leverage, developer velocity, and building the internal business case.
+- **Tier 3: Economic Decision Makers (VPs & C-Suite)**
+  - Executive presentation of gross margin protection, risk reduction, and top-line ROI.
 
-### Stage 5: Craft Personalized Hooks & Conversation Bits
-For each enriched prospect, formulate tailored outreach assets:
-- **Pattern-Interrupt Subject Line**: Specific, curiosity-evoking, spam-free.
-- **Personalized Hook / Opener**: Direct reference to a factual trigger or recent milestone.
-- **Value Bridge**: Clear connection between their specific pain/growth point and how our product helps.
-- **Conversation Bits & Soundbites**: 1–2 punchy phrases tailored for cold calls, LinkedIn messages, or voice notes.
-- **Low-Friction Call-to-Action (CTA)**: Peer-level, interest-based ask.
+### Stage 5: Craft Role-Specific Hooks & Live Call Cheat Sheets
+For each stakeholder, formulate customized assets anchored in the company's macro scenario:
+- **Pattern-Interrupt Cold Hook**: References their specific operational reality and role focus.
+- **Live Call Soundbite**: 1–2 punchy phrases to use during cold calls, voicemails, or LinkedIn notes.
+- **Next-Step Ask / Recon Question**: Tailored ask (e.g. workflow question for Manager, business benchmark for Director, executive brief for VP).
 
-### Stage 6: Google Sheets Logging
-1. Initialize a new Google Spreadsheet using `gsheets mutate create --title "<Company> - ICP Prospecting List"`.
-2. Format the header row (bold, center-aligned, frozen row 1).
-3. Append all enriched leads with full data columns.
-4. Output the direct clickable link to the user: `https://docs.google.com/spreadsheets/d/<SPREADSHEET_ID>/edit`.
+### Stage 6: Intuitive Google Sheets Logging
+1. Export the multi-threaded matrix into Google Sheets using `scripts/sheets_logger.py`.
+2. Format:
+   - 17 intuitive columns grouping company context alongside individual stakeholder plays.
+   - Bold, centered, dark-styled header with frozen row 1 for instant scanning during live calls.
+3. Provide direct links to the Google Sheet and the local company dossiers.

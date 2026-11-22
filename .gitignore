@@ -24,6 +24,7 @@ config/credentials.json
 /prospects_*.md
 /icp_*.json
 /icp_*.md
+/dossiers/
 !templates/
 !examples/
 apollo_enriched_batch.json

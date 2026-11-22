@@ -17,19 +17,21 @@ from typing import List, Dict, Any, Optional
 
 COLUMNS = [
     "Status",
-    "First Name",
-    "Last Name",
-    "Job Title",
     "Company",
-    "Website",
+    "Domain",
+    "Account Fit Score",
+    "Company Scenario & Triggers",
+    "Identified Tech Stack",
+    "Our Economic Wedge",
+    "Stakeholder Tier",
+    "Contact Name",
+    "Job Title",
     "Work Email",
     "LinkedIn URL",
-    "ICP Fit Tier",
-    "Key Facts & Signals",
-    "Personalized Hook",
-    "Conversation Bits & Soundbites",
-    "Subject Line",
-    "Outreach Snippet",
+    "Role-Specific Angle",
+    "Pattern-Interrupt Hook",
+    "Live Call Soundbite & Cheat Sheet",
+    "Key Recon Question / Ask",
     "Apollo ID"
 ]
 
@@ -45,24 +47,30 @@ def run_gsheets_cmd(args: List[str]) -> subprocess.CompletedProcess:
     cmd = [cmd_bin] + args
     return subprocess.run(cmd, capture_output=True, text=True, check=True, shell=(sys.platform == "win32"))
 
-def lead_to_row(lead: Dict[str, Any]) -> List[str]:
-    """Maps a lead dictionary to the standardized 15-column format."""
+def lead_to_row(item: Dict[str, Any]) -> List[str]:
+    """
+    Maps an account/stakeholder dictionary to the standardized 17-column
+    Account-Centric & Multi-Thread format.
+    """
+    name = item.get("name") or f"{item.get('first_name', '')} {item.get('last_name', '')}".strip()
     return [
-        str(lead.get("status", "Researched")),
-        str(lead.get("first_name", "")),
-        str(lead.get("last_name", "")),
-        str(lead.get("title", "")),
-        str(lead.get("company", "")),
-        str(lead.get("website", "") or lead.get("domain", "")),
-        str(lead.get("email", "")),
-        str(lead.get("linkedin_url", "")),
-        str(lead.get("icp_tier", "Tier 1")),
-        str(lead.get("key_facts", "")),
-        str(lead.get("personalized_hook", "")),
-        str(lead.get("soundbites", "")),
-        str(lead.get("subject_line", "")),
-        str(lead.get("outreach_snippet", "")),
-        str(lead.get("apollo_id", ""))
+        str(item.get("status", "Ready to Approach")),
+        str(item.get("company", "")),
+        str(item.get("domain", "") or item.get("website", "")),
+        str(item.get("fit_score", item.get("icp_tier", "Tier 1 (High Fit)"))),
+        str(item.get("company_scenario", item.get("key_facts", ""))),
+        str(item.get("tech_stack", "")),
+        str(item.get("economic_wedge", item.get("value_wedge", ""))),
+        str(item.get("stakeholder_tier", "Tier 1: Manager (Ground Truth)")),
+        name,
+        str(item.get("title", "")),
+        str(item.get("email", "")),
+        str(item.get("linkedin_url", "")),
+        str(item.get("role_angle", "")),
+        str(item.get("personalized_hook", item.get("hook", ""))),
+        str(item.get("soundbites", item.get("call_soundbite", ""))),
+        str(item.get("recon_question", item.get("cta", item.get("outreach_snippet", "")))),
+        str(item.get("apollo_id", ""))
     ]
 
 def create_prospecting_sheet(title: str) -> Dict[str, str]:

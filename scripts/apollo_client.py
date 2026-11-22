@@ -172,6 +172,84 @@ def enrich_organization(domain: str) -> Dict[str, Any]:
         "phone": org.get("primary_phone", {}).get("number")
     }
 
+def search_organizations(
+    q_organization_keyword_tags: Optional[List[str]] = None,
+    organization_num_employees_ranges: Optional[List[str]] = None,
+    organization_locations: Optional[List[str]] = None,
+    page: int = 1,
+    per_page: int = 10
+) -> Dict[str, Any]:
+    """
+    Discovers candidate organizations matching ICP criteria before contacting individuals.
+    """
+    payload: Dict[str, Any] = {
+        "page": page,
+        "per_page": per_page
+    }
+    if q_organization_keyword_tags:
+        payload["q_organization_keyword_tags"] = q_organization_keyword_tags
+    if organization_num_employees_ranges:
+        payload["organization_num_employees_ranges"] = organization_num_employees_ranges
+    if organization_locations:
+        payload["organization_locations"] = organization_locations
+
+    return _make_request("mixed_companies/search", json_body=payload, method="POST")
+
+def search_company_stakeholders(
+    domain: str,
+    departments: Optional[List[str]] = None,
+    titles_by_tier: Optional[Dict[str, List[str]]] = None,
+    per_tier_limit: int = 2
+) -> Dict[str, List[Dict[str, Any]]]:
+    """
+    Searches an approved target company for stakeholders across the 3-tier hierarchy:
+    - Tier 1: Managers & Leads (Ground-truth gatherers)
+    - Tier 2: Directors & Heads (Functional champions)
+    - Tier 3: VPs & CXOs (Economic decision makers)
+    """
+    ladder_results = {
+        "tier_1_managers": [],
+        "tier_2_directors": [],
+        "tier_3_executives": []
+    }
+
+    tier_specs = [
+        ("tier_1_managers", ["manager", "senior"], (titles_by_tier.get("tier_1") if titles_by_tier else None)),
+        ("tier_2_directors", ["director", "head"], (titles_by_tier.get("tier_2") if titles_by_tier else None)),
+        ("tier_3_executives", ["vp", "c_suite"], (titles_by_tier.get("tier_3") if titles_by_tier else None))
+    ]
+
+    for tier_key, seniorities, titles in tier_specs:
+        payload: Dict[str, Any] = {
+            "q_organization_domains": [domain],
+            "person_seniorities": seniorities,
+            "page": 1,
+            "per_page": per_tier_limit
+        }
+        if titles:
+            payload["person_titles"] = titles
+        if departments:
+            payload["person_departments"] = departments
+
+        res = _make_request("mixed_people/search", json_body=payload, method="POST")
+        people = res.get("people", [])
+        extracted = []
+        for p in people:
+            extracted.append({
+                "first_name": p.get("first_name", ""),
+                "last_name": p.get("last_name", ""),
+                "name": p.get("name", ""),
+                "title": p.get("title", ""),
+                "email": p.get("email", ""),
+                "linkedin_url": p.get("linkedin_url", ""),
+                "apollo_id": p.get("id", ""),
+                "seniority": p.get("seniority", ""),
+                "departments": p.get("departments", [])
+            })
+        ladder_results[tier_key] = extracted
+
+    return ladder_results
+
 def search_people(
     person_titles: Optional[List[str]] = None,
     person_seniorities: Optional[List[str]] = None,

@@ -2,7 +2,7 @@
 # Standard execution uses Python 3.9+ built-in libraries (urllib, json, csv, subprocess).
 
 # Optional environment variable file loader (.env support)
-python-dotenv>=1.0.0
+python-dotenv>=1.2.4
 
 # Optional packages for data analysis or custom integrations
 requests>=2.31.0

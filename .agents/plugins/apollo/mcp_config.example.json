@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "apollo": {
+      "url": "https://mcp.apollo.io/mcp",
+      "headers": {
+        "x-api-key": "YOUR_APOLLO_API_KEY_HERE"
+      }
+    }
+  }
+}

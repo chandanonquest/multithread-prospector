@@ -1,0 +1,27 @@
+{
+  "company_name": "CloudMetric AI",
+  "product_name": "Autonomous Cloud Cost & Latency Optimizer",
+  "website": "cloudmetric.example.com",
+  "icp": {
+    "core_offering": "Real-time AI Kubernetes and cloud resource optimization reducing AWS/GCP bills by 35% without downtime.",
+    "target_vertical": "B2B SaaS, FinTech, High-Scale Data Infrastructure",
+    "target_company_size": "50-500 employees (Series A to Series C)",
+    "primary_buyer_persona": "VP of Engineering, Head of Infrastructure, Director of DevOps",
+    "secondary_buyer_persona": "CTO, FinOps Lead",
+    "primary_pain_point": "Spiraling cloud infrastructure costs and manual Kubernetes pod tuning taking engineering hours away from product delivery.",
+    "key_benefit": "35% automated cloud cost reduction in 14 days with zero risk of latency degradation.",
+    "apollo_filters": {
+      "person_titles": [
+        "VP of Engineering",
+        "Head of Infrastructure",
+        "Director of Infrastructure",
+        "Director of DevOps",
+        "VP of DevOps"
+      ],
+      "person_seniorities": ["director", "vp", "c_suite"],
+      "organization_num_employees_ranges": ["51,200", "201,500"],
+      "organization_locations": ["United States", "Canada"],
+      "q_organization_keyword_tags": ["SaaS", "Kubernetes", "Cloud Infrastructure", "FinTech"]
+    }
+  }
+}

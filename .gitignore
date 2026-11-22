@@ -1,0 +1,84 @@
+# ==============================================================================
+# Security & Secret Protection (MANDATORY)
+# Never commit real API keys, credentials, or tokens to version control
+# ==============================================================================
+.env
+.env.*
+!.env.example
+*.local
+credentials.json
+config/credentials.json
+!config/credentials.example.json
+.agents/plugins/apollo/mcp_config.json
+!.agents/plugins/apollo/mcp_config.example.json
+*.pem
+*.key
+*.cert
+*.p12
+
+# ==============================================================================
+# Prospecting Output Datasets & Lead PII (Root directory runs)
+# Protect scraped leads, CSV exports, generated reports, and presentations
+# ==============================================================================
+/prospects_*.csv
+/prospects_*.md
+/icp_*.json
+/icp_*.md
+!templates/
+!examples/
+apollo_enriched_batch.json
+presentation_result.json
+prospecting_batch_result.json
+*.pdf
+
+# ==============================================================================
+# Python & Bytecode
+# ==============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# ==============================================================================
+# OS & Editor Artifacts
+# ==============================================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~

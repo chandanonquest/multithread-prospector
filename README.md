@@ -1,5 +1,9 @@
 # Autonomous B2B Prospecting Swarm: Account-First & Multi-Thread Engine
 
+[![CI & Secret Verification](https://github.com/chandanonquest/multithread-prospector/actions/workflows/ci.yml/badge.svg)](https://github.com/chandanonquest/multithread-prospector/actions/workflows/ci.yml)
+[![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org/)
+[![Security: Pre-flight Validated](https://img.shields.io/badge/secrets-pre--flight%20scanned-success)](scripts/verify_no_secrets.py)
+
 An account-centric B2B prospecting engine that prioritizes **Company Suitability First** before looking for individuals. It analyzes target accounts, calculates fit scores, builds comprehensive company intelligence dossiers, maps a 3-tier stakeholder ladder (Managers -> Directors -> VPs/CXOs), crafts role-specific soundbites anchored in the company's macro scenario, and synchronizes everything to an intuitive, live-call-ready Google Sheet.
 
 ```mermaid
@@ -34,6 +38,11 @@ flowchart TD
 │   ├── plugins/apollo/          # Apollo MCP plugin configurations
 │   ├── rules/AGENTS.md          # Workspace operating rules
 │   └── skills/                  # Autonomous prospecting swarm skill
+├── .github/
+│   ├── ISSUE_TEMPLATE/          # Structured YAML issue forms & contact links
+│   ├── workflows/ci.yml         # CI pipeline with secret scanner & syntax tests
+│   ├── dependabot.yml           # Automated monthly dependency updater
+│   └── PULL_REQUEST_TEMPLATE.md # Standard PR checklist and quality gates
 ├── config/
 │   └── credentials.example.json # Safe template for local credentials
 ├── examples/
@@ -56,7 +65,12 @@ flowchart TD
 │   ├── multi_thread_matrix.md   # 3-tier stakeholder ladder guide
 │   └── outreach_framework.md    # Structure for hooks, soundbites, and drafts
 ├── .env.example                 # Environment variables template
+├── .gitattributes               # Cross-platform LF line endings normalization
 ├── .gitignore                   # Exclusions for keys, client dossiers, and lead data
+├── .pre-commit-config.yaml      # Pre-commit hygiene and secret validation
+├── AGENTS.md                    # Agent & contributor operating rules
+├── CONTRIBUTING.md              # Development and contribution guide
+├── SECURITY.md                  # Security and disclosure policy
 └── requirements.txt             # Python dependencies
 ```
 
@@ -67,8 +81,8 @@ flowchart TD
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/b2b-prospecting-swarm.git
-cd b2b-prospecting-swarm
+git clone https://github.com/chandanonquest/multithread-prospector.git
+cd multithread-prospector
 ```
 
 ### 2. Configure Local Credentials Safely
@@ -114,6 +128,8 @@ When operating within an Antigravity agent session:
 
 ## Contributing
 
-1. Fork this repository and create a feature branch.
+See our [Contribution Guidelines](CONTRIBUTING.md) and [Security Policy](SECURITY.md) before submitting pull requests.
+
+1. Fork this repository and create a feature branch (`git checkout -b feat/your-feature`).
 2. Ensure `python scripts/verify_no_secrets.py` passes with zero warnings.
 3. Submit a pull request.

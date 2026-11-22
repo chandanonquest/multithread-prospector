@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Community Discussions
+    about: Ask questions or discuss new prospecting workflows
+    url: https://github.com/chandanonquest/multithread-prospector/discussions

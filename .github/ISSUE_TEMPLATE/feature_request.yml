@@ -1,0 +1,18 @@
+name: Feature Request
+description: Propose an enhancement or new capability
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Feature
+      description: Clear overview of the proposed change
+    validations:
+      required: true
+  - type: textarea
+    id: value
+    attributes:
+      label: Strategic Value
+      description: How does this improve prospecting workflows?
+    validations:
+      required: true

@@ -1,0 +1,30 @@
+name: Bug Report
+description: Report an issue or unexpected script behavior
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: Thank you for contributing to the stability of the prospecting swarm!
+  - type: textarea
+    id: problem
+    attributes:
+      label: Bug Description
+      description: What unexpected behavior occurred?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction Steps
+      placeholder: |
+        1. Run script ...
+        2. Expected outcome vs actual outcome ...
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Runtime Environment
+      placeholder: e.g. Python 3.11 on Windows 11
+    validations:
+      required: true
